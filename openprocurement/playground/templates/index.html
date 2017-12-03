@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Prozorro Playground</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
+    <style>
+      .row-m {
+        margin: 0.5em;
+      }
+      #select-snippet {
+        width: 99%;
+      }
+      #editor {
+        width: 99%;
+        height: 600px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+      }
+      #loading {
+        margin-left: 10px;
+      }
+      textarea {
+        font-family:Consolas,Monaco,Lucida Console,Courier New,monospace;
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-inverse-x" role="navigation">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Prozorro API Playground</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-righ-t">
+            <li><a href="http://api-docs.openprocurement.org/uk_UA/latest/">Documentation</a></li>
+            <li><a href="https://github.com/openprocurement/openprocurement.api">API on github</a></li>
+            <li><a href="https://github.com/imaginal/openprocurement.playground">Playground on github</a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+    <form id="playform" method="POST" action="api">
+
+    <div class="row row-m">
+      <div class="col-xs-6">
+
+        <div class="form-group">
+          <select class="form-control" id="select-snippet">
+          </select>
+        </div>
+
+        <div class="form-group">
+          <textarea name="editor"></textarea>
+          <div id="editor"></div>
+        </div>
+
+      </div>
+      <div class="col-xs-5">
+
+        <div class="row form-group">
+          <div class="col-xs-4">
+            <select class="form-control" id="method" name="method">
+              <option value="GET">GET</option>
+              <option value="POST" selected="selected">POST</option>
+              <option value="PUT">PUT</option>
+              <option value="PATCH">PATCH</option>
+              <option value="DELETE">DELETE</option>
+            </select>
+          </div>
+
+          <div class="col-xs-8">
+            <input type="url" class="form-control" id="api_url" name="api_url" placeholder="API URL"
+              value="//lb.api-sandbox.openprocurement.org">
+          </div>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" id="path_url" name="path_url" placeholder="Path URL"
+            value="/api/0/tenders">
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" id="api_key" name="api_key" placeholder="API KEY">
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" id="acc_token" name="acc_token" placeholder="X-Access-Token">
+        </div>
+        <div class="form-group">
+          <button type="submit" id="submit" class="btn btn-primary">Submit</button>
+          <img id="loading" alt="loading" src="data:image/gif;base64,
+            R0lGODlhIgAUAMQRAOjp6dTW19ze3+Xm54iKjevs7IKEh/f396Olp5ianPz8/Judn9fY2YGDhp+h
+            o4CChdHT1P///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH/C05F
+            VFNDQVBFMi4wAwEAAAAh/wtYTVAgRGF0YVhNUDw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVN
+            ME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0
+            YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8x
+            Mi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9y
+            Zy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9
+            IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0
+            UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxu
+            czp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1l
+            bnRJRD0ieG1wLmRpZDoxRThFNDZFQ0RFQjJFMjExQUZCNUREQjU1MEFCRTI5OCIgeG1wTU06RG9j
+            dW1lbnRJRD0ieG1wLmRpZDozNkVFNURCOUIyREYxMUUyQTBEQUNFNUIzREVGNjg0MyIgeG1wTU06
+            SW5zdGFuY2VJRD0ieG1wLmlpZDozNkVFNURCOEIyREYxMUUyQTBEQUNFNUIzREVGNjg0MyIgeG1w
+            OkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IFdpbmRvd3MiPiA8eG1wTU06RGVyaXZl
+            ZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDoyMDhFNDZFQ0RFQjJFMjExQUZCNUREQjU1
+            MEFCRTI5OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDoxRThFNDZFQ0RFQjJFMjExQUZCNURE
+            QjU1MEFCRTI5OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4g
+            PD94cGFja2V0IGVuZD0iciI/PgH//v38+/r5+Pf29fTz8vHw7+7t7Ovq6ejn5uXk4+Lh4N/e3dzb
+            2tnY19bV1NPS0dDPzs3My8rJyMfGxcTDwsHAv769vLu6ubi3trW0s7KxsK+urayrqqmop6alpKOi
+            oaCfnp2cm5qZmJeWlZSTkpGQj46NjIuKiYiHhoWEg4KBgH9+fXx7enl4d3Z1dHNycXBvbm1sa2pp
+            aGdmZWRjYmFgX15dXFtaWVhXVlVUU1JRUE9OTUxLSklIR0ZFRENCQUA/Pj08Ozo5ODc2NTQzMjEw
+            Ly4tLCsqKSgnJiUkIyIhIB8eHRwbGhkYFxYVFBMSERAPDg0MCwoJCAcGBQQDAgEAACH5BAkyABEA
+            LAAAAAAiABQAAAVeYCSOZGmeaKqubOu+cCzPdM0iBIGYgCAUPB8Q5XgYHw4SAMKEAJRNJ8pwfBhI
+            gagAq0U1qg1ukyFmkk+L6oI0iD5H7ebbdEgYEweSYhAIDEp7fX82hIWGh4iJiosoIQAh+QQJMgAR
+            ACwAAAAAIgAUAAAFZGAkjmRpnmiqrmzrvnAsz3TNFoIAmAhBICZArpACQI6Q3cjxaD4cJCNSaRIg
+            IQGSwfkwkAJXAYpxzY4a3Mb3ykBJjwPSgrsgDa5U0yAQGChIBwlNCQckCnt9NoqLjI2Oj5CRKSEA
+            IfkEBTIAEQAsAAAAACIAFAAABWNgJI5kaZ5oqq5s675wLM90zRaCAJi4biIEAiIFgBghu1HxmBQ5
+            HtCHAyU4QgKk6hE7MkQfBhTDyhWNt6TGt4FaGgckNwQ+WnwXqUEgMFCU9Hx+IwcJUAkHNomKi4yN
+            jo+QKCEAOw==" style="display: none"/>
+          <span id="sb-msg"></span>
+        </div>
+
+        <br>
+        <br>
+        <div class="form-group">
+          <label>Response:</label>
+          <textarea class="form-control" rows="15" id="output" readonly="readonly"></textarea>
+          <a id="response-location" href="#" target="_blank"></a>
+        </div>
+
+      </div>
+    </div>
+
+    </form>
+
+    <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.1/underscore-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/ace/1.2.9/ace.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/ace/1.2.9/mode-json.js"></script>
+
+    <script type="application/javascript">
+      $(function(){
+        // init editor
+        var editor = ace.edit("editor");
+        var textarea = $('textarea[name="editor"]').hide();
+        editor.getSession().setMode("ace/mode/json");
+        editor.getSession().setValue(textarea.val());
+        editor.getSession().on('change', function(){
+          textarea.val(editor.getSession().getValue());
+        });
+
+        // load values from localStorage
+        try {
+          var form_keys = ['api_url', 'path_url', 'api_key', 'acc_token'];
+          for (i in form_keys)
+            $('#'+form_keys[i]).val(localStorage.getItem(form_keys[i]));
+        } catch (e) {
+          console.log('getItem', e);
+        }
+
+        function saveSnippet(name) {
+          if (name.toString() == 'null')
+            return;
+          if (name.length < 2)
+            return;
+          editor_text = $('textarea[name="editor"]').val();
+          if (editor_text.length < 50)
+            return;
+          name = 'S_' + name;
+          localStorage.setItem(name, editor_text);
+          return name;
+        }
+
+        function updateSnippetSelect() {
+          var save = [],
+              hist = [];
+          Object.keys(localStorage).forEach(function (key) {
+            if (key.match('^S_.+'))
+              save.push(key.substring(2))
+            if (key.match('^H_.+'))
+              hist.push(key.substring(2));
+          });
+          var $s = $("#select-snippet");
+          $s.html('');
+          function appendOption(value, text) {
+            $o = $('<option/>').attr('value', value).text(text);
+            $s.append($o);
+          }
+          appendOption('', '');
+          save.sort().forEach(function (key) {
+            appendOption('S_'+key, key);
+          });
+          if (save.length)
+            appendOption('', '-');
+          hist.sort().forEach(function (key) {
+            appendOption('H_'+key, 'History '+key);
+          });
+          if (hist.length)
+            appendOption('', '-');
+          appendOption('Save', 'Save as...');
+        }
+
+        updateSnippetSelect();
+
+        // init form
+        $("#select-snippet").change(function() {
+          if (this.value.match(/Save/)) {
+            name = prompt("Name for new snippet");
+            if (!saveSnippet(name))
+              alert("Error, snippet not saved.");
+            updateSnippetSelect();
+          }
+          else if (this.value.match(/S_.+/)) {
+            var text = localStorage.getItem(this.value);
+            if (text)
+              editor.getSession().setValue(text);
+            else
+              editor.getSession().setValue('Snippet not found');
+          }
+          else if (this.value.match(/H_\d/)) {
+            var text = localStorage.getItem(this.value);
+            if (text)
+              editor.getSession().setValue(text);
+            else
+              editor.getSession().setValue('History is empty');
+          }
+          else if (this.value.match(/snippet.+/)) {
+            var rnd = "?r="+Math.random();
+            $.getJSON(this.value+rnd, function(data, status, jqXHR){
+              editor.getSession().setValue(jqXHR.responseText);
+            });
+          }
+        });
+
+        function updateLocation(responseText) {
+          var a = $('#response-location');
+              m = /Location: (http.+)/.exec(responseText);
+          if (responseText && m) {
+            a.attr('href', m[1]);
+            a.text(m[1]);
+          } else {
+            a.attr('href', '#');
+            a.text('');
+          }
+        }
+
+        function postForm() {
+          // save form to localStorage
+          for (i in form_keys)
+            localStorage.setItem(form_keys[i], $('#'+form_keys[i]).val());
+          // try parse data before send
+          JSON.parse($('textarea[name="editor"]').val());
+          // submit request
+          var $form = $('#playform');
+          $.ajax({
+            type: $form.attr('method'),
+            url: $form.attr('action'),
+            data: $form.serialize(),
+            timeout: 10000,
+            success: function (data) {
+              enableSubmit();
+              if (typeof data === 'object')
+                data = JSON.stringify(data);
+              $('#output').val(data.toString());
+              updateLocation(data.toString());
+            },
+            error: function (jqXHR, status, error) {
+              enableSubmit();
+              if (typeof error === 'object')
+                error = JSON.stringify(error);
+              $('#output').val("Error: "+error.toString());
+            }
+          })
+        }
+
+        function enableSubmit() {
+          $('#loading').hide();
+          $('#sb-msg').text('');
+          $('#submit').prop('disabled', false);
+        }
+
+        function pushHistory() {
+          var editor_text = $('textarea[name="editor"]').val();
+          if (editor_text.length < 50)
+            return;
+          for (var i = 5; i > 1; --i) {
+            var curr = 'H_' + (i),
+                prev = 'H_' + (i-1),
+                text = localStorage.getItem(prev);
+            if (text)
+              localStorage.setItem(curr, text);
+          }
+          localStorage.setItem('H_1', editor_text);
+          updateSnippetSelect();
+          console.log('History saved');
+        }
+
+        // setup submit
+        $('#playform').submit(function(e) {
+          $('#submit').prop('disabled', true);
+          $('#loading').show();
+          setTimeout(enableSubmit, 5000);
+          try {
+            pushHistory();
+            postForm();
+          } catch (e) {
+            enableSubmit();
+            $('#output').val("Error: "+e.toString())
+          }
+          e.preventDefault();
+          return false;
+        });
+      });
+
+    </script>
+  </body>
+</html>

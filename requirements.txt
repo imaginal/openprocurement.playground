@@ -1,0 +1,6 @@
+flask
+iso8601
+pytz
+requests
+simplejson
+git+https://github.com/openprocurement/openprocurement.client.python.git@2.0b5
