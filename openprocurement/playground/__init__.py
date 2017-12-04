@@ -87,7 +87,7 @@ def post_api():
 
     url = api_url + path_url
 
-    match_version = re.match('#/api/(\d[\d\.]*)/#', path_url)
+    match_version = re.match(r'/api/(\d[\d\.]*)/', path_url)
     api_version = match_version.group(1) if match_version else '2.3'
 
     try:
