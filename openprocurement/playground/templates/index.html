@@ -23,6 +23,13 @@
       #loading {
         margin-left: 10px;
       }
+      .overflow-ellipsis {
+        display: inline-block;
+        text-overflow: ellipsis;
+        width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+      }
       textarea {
         font-family:Consolas,Monaco,Lucida Console,Courier New,monospace;
       }
@@ -38,7 +45,7 @@
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <div class="collapse navbar-collapse" id="bs-docs-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-righ-t">
             <li><a href="http://api-docs.openprocurement.org/uk_UA/latest/">Documentation</a></li>
             <li><a href="https://github.com/openprocurement/openprocurement.api">API on github</a></li>
@@ -92,53 +99,112 @@
         <div class="form-group">
           <input type="text" class="form-control" id="acc_token" name="acc_token" placeholder="X-Access-Token">
         </div>
-        <div class="form-group">
-          <button type="submit" id="submit" class="btn btn-primary">Submit</button>
-          <img id="loading" alt="loading" src="data:image/gif;base64,
-            R0lGODlhIgAUAMQRAOjp6dTW19ze3+Xm54iKjevs7IKEh/f396Olp5ianPz8/Judn9fY2YGDhp+h
-            o4CChdHT1P///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH/C05F
-            VFNDQVBFMi4wAwEAAAAh/wtYTVAgRGF0YVhNUDw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVN
-            ME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0
-            YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8x
-            Mi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9y
-            Zy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9
-            IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0
-            UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxu
-            czp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1l
-            bnRJRD0ieG1wLmRpZDoxRThFNDZFQ0RFQjJFMjExQUZCNUREQjU1MEFCRTI5OCIgeG1wTU06RG9j
-            dW1lbnRJRD0ieG1wLmRpZDozNkVFNURCOUIyREYxMUUyQTBEQUNFNUIzREVGNjg0MyIgeG1wTU06
-            SW5zdGFuY2VJRD0ieG1wLmlpZDozNkVFNURCOEIyREYxMUUyQTBEQUNFNUIzREVGNjg0MyIgeG1w
-            OkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IFdpbmRvd3MiPiA8eG1wTU06RGVyaXZl
-            ZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDoyMDhFNDZFQ0RFQjJFMjExQUZCNUREQjU1
-            MEFCRTI5OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDoxRThFNDZFQ0RFQjJFMjExQUZCNURE
-            QjU1MEFCRTI5OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4g
-            PD94cGFja2V0IGVuZD0iciI/PgH//v38+/r5+Pf29fTz8vHw7+7t7Ovq6ejn5uXk4+Lh4N/e3dzb
-            2tnY19bV1NPS0dDPzs3My8rJyMfGxcTDwsHAv769vLu6ubi3trW0s7KxsK+urayrqqmop6alpKOi
-            oaCfnp2cm5qZmJeWlZSTkpGQj46NjIuKiYiHhoWEg4KBgH9+fXx7enl4d3Z1dHNycXBvbm1sa2pp
-            aGdmZWRjYmFgX15dXFtaWVhXVlVUU1JRUE9OTUxLSklIR0ZFRENCQUA/Pj08Ozo5ODc2NTQzMjEw
-            Ly4tLCsqKSgnJiUkIyIhIB8eHRwbGhkYFxYVFBMSERAPDg0MCwoJCAcGBQQDAgEAACH5BAkyABEA
-            LAAAAAAiABQAAAVeYCSOZGmeaKqubOu+cCzPdM0iBIGYgCAUPB8Q5XgYHw4SAMKEAJRNJ8pwfBhI
-            gagAq0U1qg1ukyFmkk+L6oI0iD5H7ebbdEgYEweSYhAIDEp7fX82hIWGh4iJiosoIQAh+QQJMgAR
-            ACwAAAAAIgAUAAAFZGAkjmRpnmiqrmzrvnAsz3TNFoIAmAhBICZArpACQI6Q3cjxaD4cJCNSaRIg
-            IQGSwfkwkAJXAYpxzY4a3Mb3ykBJjwPSgrsgDa5U0yAQGChIBwlNCQckCnt9NoqLjI2Oj5CRKSEA
-            IfkEBTIAEQAsAAAAACIAFAAABWNgJI5kaZ5oqq5s675wLM90zRaCAJi4biIEAiIFgBghu1HxmBQ5
-            HtCHAyU4QgKk6hE7MkQfBhTDyhWNt6TGt4FaGgckNwQ+WnwXqUEgMFCU9Hx+IwcJUAkHNomKi4yN
-            jo+QKCEAOw==" style="display: none"/>
-          <span id="sb-msg"></span>
+        <div class="row form-group">
+          <div class="col-xs-8">
+            <button type="submit" id="submit" class="btn btn-primary">Submit</button>
+            <img id="loading" alt="loading" src="data:image/gif;base64,
+              R0lGODlhIgAUAMQRAOjp6dTW19ze3+Xm54iKjevs7IKEh/f396Olp5ianPz8/Judn9fY2YGDhp+h
+              o4CChdHT1P///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH/C05F
+              VFNDQVBFMi4wAwEAAAAh/wtYTVAgRGF0YVhNUDw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVN
+              ME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0
+              YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8x
+              Mi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9y
+              Zy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9
+              IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0
+              UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxu
+              czp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1l
+              bnRJRD0ieG1wLmRpZDoxRThFNDZFQ0RFQjJFMjExQUZCNUREQjU1MEFCRTI5OCIgeG1wTU06RG9j
+              dW1lbnRJRD0ieG1wLmRpZDozNkVFNURCOUIyREYxMUUyQTBEQUNFNUIzREVGNjg0MyIgeG1wTU06
+              SW5zdGFuY2VJRD0ieG1wLmlpZDozNkVFNURCOEIyREYxMUUyQTBEQUNFNUIzREVGNjg0MyIgeG1w
+              OkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IFdpbmRvd3MiPiA8eG1wTU06RGVyaXZl
+              ZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDoyMDhFNDZFQ0RFQjJFMjExQUZCNUREQjU1
+              MEFCRTI5OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDoxRThFNDZFQ0RFQjJFMjExQUZCNURE
+              QjU1MEFCRTI5OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4g
+              PD94cGFja2V0IGVuZD0iciI/PgH//v38+/r5+Pf29fTz8vHw7+7t7Ovq6ejn5uXk4+Lh4N/e3dzb
+              2tnY19bV1NPS0dDPzs3My8rJyMfGxcTDwsHAv769vLu6ubi3trW0s7KxsK+urayrqqmop6alpKOi
+              oaCfnp2cm5qZmJeWlZSTkpGQj46NjIuKiYiHhoWEg4KBgH9+fXx7enl4d3Z1dHNycXBvbm1sa2pp
+              aGdmZWRjYmFgX15dXFtaWVhXVlVUU1JRUE9OTUxLSklIR0ZFRENCQUA/Pj08Ozo5ODc2NTQzMjEw
+              Ly4tLCsqKSgnJiUkIyIhIB8eHRwbGhkYFxYVFBMSERAPDg0MCwoJCAcGBQQDAgEAACH5BAkyABEA
+              LAAAAAAiABQAAAVeYCSOZGmeaKqubOu+cCzPdM0iBIGYgCAUPB8Q5XgYHw4SAMKEAJRNJ8pwfBhI
+              gagAq0U1qg1ukyFmkk+L6oI0iD5H7ebbdEgYEweSYhAIDEp7fX82hIWGh4iJiosoIQAh+QQJMgAR
+              ACwAAAAAIgAUAAAFZGAkjmRpnmiqrmzrvnAsz3TNFoIAmAhBICZArpACQI6Q3cjxaD4cJCNSaRIg
+              IQGSwfkwkAJXAYpxzY4a3Mb3ykBJjwPSgrsgDa5U0yAQGChIBwlNCQckCnt9NoqLjI2Oj5CRKSEA
+              IfkEBTIAEQAsAAAAACIAFAAABWNgJI5kaZ5oqq5s675wLM90zRaCAJi4biIEAiIFgBghu1HxmBQ5
+              HtCHAyU4QgKk6hE7MkQfBhTDyhWNt6TGt4FaGgckNwQ+WnwXqUEgMFCU9Hx+IwcJUAkHNomKi4yN
+              jo+QKCEAOw==" style="display: none"/>
+            <span id="sb-msg"></span>
+          </div>
+          <div class="col-xs-4 text-right">
+            <button type="button" class="btn btn-default" data-toggle="modal" id="newdoc"
+              data-target="#docsModal"><span class="glyphicon">+</span> New doc</button>
+          </div>
         </div>
 
         <br>
         <br>
         <div class="form-group">
           <label>Response:</label>
-          <textarea class="form-control" rows="15" id="output" readonly="readonly"></textarea>
-          <a id="response-location" href="#" target="_blank"></a>
+          <textarea class="form-control" rows="16" id="output" readonly="readonly"></textarea>
+          <br>
+          <a id="response-location" href="#" target="_blank" class="overflow-ellipsis"></a>
         </div>
 
       </div>
     </div>
 
     </form>
+
+    <div class="modal fade" id="docsModal" tabindex="-1" role="dialog" aria-labelledby="docsModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="docsModalLabel">New document</h4>
+          </div>
+          <div class="modal-body">
+            <form id="docsform" method="POST" action="doc">
+
+              <div class="row form-group">
+                <div class="col-xs-8">
+                  <input type="url" class="form-control" id="doc_api_url" name="doc_api_url" placeholder="DOC SERVICE API URL" value="">
+                </div>
+                <div class="col-xs-4">
+                  <select class="form-control" id="doc_api_path" name="doc_api_path">
+                    <option value="/register">/register</option>
+                    <option value="/upload" selected="selected">/upload</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" id="document_id" name="document_id" placeholder="document_id" value="">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" id="doc_api_key" name="doc_api_key" placeholder="DOC SERVICE API USER:PASS">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" id="doc_filename" name="doc_filename" placeholder="FILENAME.EXT"
+                  value="example.txt">
+              </div>
+              <div class="form-group">
+                <label for="document_body" class="control-label">Document body:</label>
+                <textarea class="form-control" id="document_body" name="document_body">Example document body</textarea>
+              </div>
+              <div class="form-group">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" value="" id="update_json" checked="checked">
+                    Update json in <b>editor</b> on success upload
+                  </label>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="submit_document">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
@@ -159,7 +225,7 @@
 
         // load values from localStorage
         try {
-          var form_keys = ['api_url', 'path_url', 'api_key', 'acc_token'];
+          var form_keys = ['api_url', 'path_url', 'api_key', 'acc_token', 'doc_api_url', 'doc_api_key'];
           for (i in form_keys)
             $('#'+form_keys[i]).val(localStorage.getItem(form_keys[i]));
         } catch (e) {
@@ -240,6 +306,18 @@
           }
         });
 
+        function updateFormJson(responseText) {
+          if (responseText.search("200 OK") != 0)
+            return;
+          var pos1 = responseText.search('"data": {'),
+              pos2 = responseText.search('}', pos1);
+          if (pos1 < 0)
+            return;
+          var data = responseText.substr(pos1, pos2-pos1+1),
+              text = "{\n  " + data + "\n}";
+          editor.getSession().setValue(text);
+        }
+
         function updateLocation(responseText) {
           var a = $('#response-location');
               m = /Location: (http.+)/.exec(responseText);
@@ -264,7 +342,7 @@
             type: $form.attr('method'),
             url: $form.attr('action'),
             data: $form.serialize(),
-            timeout: 10000,
+            timeout: 30000,
             success: function (data) {
               enableSubmit();
               if (typeof data === 'object')
@@ -281,10 +359,48 @@
           })
         }
 
+        function postDocument() {
+          // save form to localStorage
+          for (i in form_keys)
+            localStorage.setItem(form_keys[i], $('#'+form_keys[i]).val());
+          // submit request
+          var $form = $('#docsform');
+          $.ajax({
+            type: $form.attr('method'),
+            url: $form.attr('action'),
+            data: $form.serialize(),
+            timeout: 30000,
+            success: function (data) {
+              enableSubmit();
+              if (typeof data === 'object')
+                data = JSON.stringify(data);
+              $('#output').val(data.toString());
+              updateLocation(data.toString());
+              if ($('#update_json').prop('checked'))
+                updateFormJson(data.toString());
+            },
+            error: function (jqXHR, status, error) {
+              enableSubmit();
+              if (typeof error === 'object')
+                error = JSON.stringify(error);
+              $('#output').val("Error: "+error.toString());
+            }
+          })
+        }
+
         function enableSubmit() {
           $('#loading').hide();
           $('#sb-msg').text('');
           $('#submit').prop('disabled', false);
+          $('#newdoc').prop('disabled', false);
+        }
+
+        function disableSubmit() {
+          $('#newdoc').prop('disabled', true);
+          $('#submit').prop('disabled', true);
+          $('#sb-msg').text('');
+          $('#loading').show();
+          setTimeout(enableSubmit, 30000);
         }
 
         function pushHistory() {
@@ -305,12 +421,25 @@
 
         // setup submit
         $('#playform').submit(function(e) {
-          $('#submit').prop('disabled', true);
-          $('#loading').show();
-          setTimeout(enableSubmit, 5000);
+          disableSubmit();
           try {
             pushHistory();
             postForm();
+          } catch (e) {
+            enableSubmit();
+            $('#output').val("Error: "+e.toString())
+          }
+          e.preventDefault();
+          return false;
+        });
+
+        // setup doc submit
+        $('#submit_document').click(function(e) {
+          $('#docsModal').modal('hide');
+          disableSubmit();
+          try {
+            pushHistory();
+            postDocument();
           } catch (e) {
             enableSubmit();
             $('#output').val("Error: "+e.toString())
