@@ -3,7 +3,6 @@ from setuptools import setup, find_packages
 requires = [
     'flask',
     'iso8601',
-    'openprocurement_client',
     'pytz',
     'requests',
     'setuptools',
@@ -16,7 +15,7 @@ entry_points = {
 
 setup(
     name='openprocurement.playground',
-    version='0.2b1',
+    version='0.3',
     description="Web console for openprocurement.api",
     long_description=open("README.md").read(),
     # Get more strings from
